@@ -2,6 +2,7 @@ Initial Release:
 	Find nearest stop and give bus times for that stop.
 
 Second Phase:
+
 Populate lists:
 	
 		- closest bus stops
