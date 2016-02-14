@@ -1,3 +1,4 @@
+console.log(get_bus_times("Hill Center"));
 //busch - purple
 //c.ave - yellow
 //livi - blue
@@ -35,13 +36,13 @@ function color_code(bus_time){
 	}	
 }
 
-jsonData.open("GET",json_url,true);
-jsonData.send();
+//jsonData.open("GET",json_url,true);
+//jsonData.send();
 
-var location = showPosition();
+//var location = showPosition();
 
 
-jsonData.onload = setInterval(function() {
+/*jsonData.onload = setInterval(function() {
     if (jsonData.status === 200){
         responsiveObject = JSON.parse(jsonData.responsiveText);
     }
@@ -64,7 +65,7 @@ jsonData.onload = setInterval(function() {
     	body += '</div>';
     }
 	document.getElementById('info_html').innerHTML = body;
-    },1000);
+    },1000);*/
 
 // default
 // find location
@@ -83,3 +84,18 @@ jsonData.onload = setInterval(function() {
 		// shuts off if default is checked off
 	// second one dependent on first and updates the table of routes & times of that location
 		// if off saves last stop that was opened
+
+function load_nearby_stops()
+{
+    // get user location
+    // load nearby stops into html
+}
+
+// start everything up
+$(document).ready(
+    function()
+    {
+        // get user location and put all nearby stops in dropdown
+        // populate table with bus times for nearest stop
+    }
+);
