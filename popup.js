@@ -10,18 +10,6 @@
 var jsonData = new XMLHttpRequest();
 var json_url = "http://runextbus.herokuapp.com/stop/Hill%20Center";
 
-//var location_url = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCWkgXSQPLEfkBfTg1fgjQ_uEZABRMIh5c"
-
-// var geocoder = new google.maps.Geocoder();
-// var address = document.getElementById("address").value;
-
-// geocoder.geocode( { 'address': address}, function(results, status) {
-// 	if (status == google.maps.GeocoderStatus.OK){
-// 		var lat = results[0].geometry.location.latitude;
-//       	var lon = results[0].geometry.location.longitude;
-//   	}
-// });
-
 var bus_time;
 function color_code(bus_time){
 	if(bus_time <= 5){
@@ -39,7 +27,6 @@ jsonData.open("GET",json_url,true);
 jsonData.send();
 
 var location = showPosition();
-
 
 jsonData.onload = setInterval(function() {
     if (jsonData.status === 200){
