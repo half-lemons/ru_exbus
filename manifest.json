@@ -14,7 +14,7 @@
   },
 
   "permissions": [
-    "<all_urls>"
+    "<all_urls>", "geolocation"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://*.bootstrapcdn.com  https://*.googleapis.com; object-src 'self'"

@@ -1,4 +1,8 @@
-console.log(get_bus_times("Hill Center"));
+//global vars
+var STOP_CHOICE = null;
+var NEAREST_STOPS;
+
+get_nearby_stops(start_extension);
 //busch - purple
 //c.ave - yellow
 //livi - blue
@@ -8,41 +12,26 @@ console.log(get_bus_times("Hill Center"));
 
 // JSON feed
 
-var jsonData = new XMLHttpRequest();
-var json_url = "http://runextbus.herokuapp.com/stop/Hill%20Center";
-
 var bus_time;
+var body = "";
 function color_code(bus_time){
 	if(bus_time <= 5){
-		body += '<button type="button" class="btn btn-danger">';
+		return '<button type="button" class="btn btn-danger">';
 	}
 	if(bus_time > 5 && bus_time <= 10){
-		body += '<button type="button" class="btn btn-warning">';
+		return '<button type="button" class="btn btn-warning">';
 	}
 	if(bus_time > 10){
-		body += '<button type="button" class="btn btn-success">';
-	}	
+		return '<button type="button" class="btn btn-success">';
+	}
 }
 
-//jsonData.open("GET",json_url,true);
-//jsonData.send();
-
-//var location = showPosition();
-
-/*jsonData.onload = setInterval(function() {
-=======
-jsonData.onload = setInterval(function() {
->>>>>>> 806c8522f1c67b46f2fed3f63afd904e3aca862d
-    if (jsonData.status === 200){
-        responsiveObject = JSON.parse(jsonData.responsiveText);
-    }
-    console.log(responsiveObject);
-
+/*
     var body; // the body of all the times encased in the buttons
 
     for(var i = 0; i < responsiveObject.length; i++){
     	body += '<div class = container>';
-        
+
         if (responsiveObject[i].predictions == "null"){
                 continue;
         }
@@ -74,18 +63,107 @@ jsonData.onload = setInterval(function() {
 		// shuts off if default is checked off
 	// second one dependent on first and updates the table of routes & times of that location
 		// if off saves last stop that was opened
+/*
+function load_nearby_stops()
+{
+    // check if they have html5 geolocation
+    if(navigator.geolocation)
+    {
+        // get user location
+        navigator.geolocation.watchPosition(
+            function(position)
+            {
+                var lat = position.coords.latitude;
+                var lon = position.coords.longitude;
+
+                // find nearby stops
+                var base_url = "http://runextbus.herokuapp.com/nearby/";
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open("GET", base_url + lat + "/" + lon, true);
+
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4)
+                    {
+                        stop_data = jQuery.parseJSON(xhr.responseText);
+                        nearest_stops = Object.keys(stop_data);
+
+                        // load nearby stops into dropdown
+
+                        window.setInterval(
+                            function()
+                            {
+                                populate_bus_table(get_bus_times(nearest_stops[0]));
+                            }, 60000
+                        );
+                    }
+                };
+
+                xhr.send();
+            }
+        );
+    }
+}
+*/
 
 function load_nearby_stops()
 {
-    // get user location
-    // load nearby stops into html
+
 }
 
-// start everything up
-$(document).ready(
-    function()
+function populate_bus_table(bus_data)
+{
+		body = "";
+    var bus_names = Object.keys(bus_data);
+    for(i = 0; i < bus_names.length; i++)
     {
-        // get user location and put all nearby stops in dropdown
-        // populate table with bus times for nearest stop
-    }
-);
+        var name = bus_names[i];
+
+				body += '<tr>';
+
+				if (name == "null"){
+					continue;
+				}
+
+				var time = bus_data[name];
+
+				body += "<td>"+name+"</td>";
+				for(var j = 0; j < time.length; j++)
+				{
+					body += "<td>"+color_code(time[j]);
+					body += time[j]+'</button></td>';
+				}
+				body += '</tr>';
+		}
+	document.getElementById('info_html').innerHTML = body;
+  return;
+}
+
+function start_extension(nearest_stops)
+{
+    NEAREST_STOPS = nearest_stops;
+
+    $(document).ready(
+        function()
+        {
+            //load_nearby_stops();
+
+            window.setInterval(
+                function()
+                {
+                    // havent gotten stops yet
+                    if(!NEAREST_STOPS)
+                    {
+                        console.log("not yet");
+                        return;
+                    }
+
+                    var stop = (STOP_CHOICE) ? STOP_CHOICE : NEAREST_STOPS[0];
+
+                    get_bus_times(stop, populate_bus_table);
+                }, 1000
+            );
+        }
+    );
+}
