@@ -3,8 +3,8 @@ Initial Release:
 
 Second Phase:
 	Populate lists:
-		-closest bus stops
-		-available bus stops
+		- closest bus stops
+		- available bus stops
 
 	Have controller wait for event clicks on these two lists and repopulates the table of bus times.
 
