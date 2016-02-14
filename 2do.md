@@ -3,6 +3,7 @@ Initial Release:
 
 Second Phase:
 	Populate lists:
+	
 		- closest bus stops
 		- available bus stops
 
