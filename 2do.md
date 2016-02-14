@@ -2,12 +2,12 @@ Initial Release:
 	Find nearest stop and give bus times for that stop.
 
 Second Phase:
-	Populate lists:
+Populate lists:
 	
 		- closest bus stops
 		- available bus stops
 
-	Have controller wait for event clicks on these two lists and repopulates the table of bus times.
+Have controller wait for event clicks on these two lists and repopulates the table of bus times.
 
 Third Phase:
 	Dynamic icon.
