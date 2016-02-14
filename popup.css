@@ -1,0 +1,40 @@
+.jumbotron {
+	padding: 0.5em 0.6em;
+	h1 {
+		font-size: 1em;
+	}
+	p {
+		font-size:1.2em;
+		
+		.btn {
+			padding: 0.5em;
+		}
+	}
+}
+.btn-outline {
+    background-color: transparent !important;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+

@@ -1,0 +1,26 @@
+
+var jsonData = new XMLHttpRequest();
+var url = "";
+
+jsonData.open("GET",url,true);
+jsonData.send();
+
+jsonData.onload = setInterval(function() {
+	if (jsonData.status === 200){
+		responsiveObject = JSON.parse(jsonData.responsiveText);
+
+	}
+	)
+}
+
+var time_slot;
+
+if (time_slot < 5){
+	"<button type="button" class="btn btn-danger"></button>"
+}
+else if (time_slot < 10 && time_slot > 5){
+	<button type="button" class="btn btn-warning"></button>
+}
+else {
+	<button type="button" class="btn btn-success"></button>
+}
