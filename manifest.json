@@ -1,1 +1,17 @@
+{
+
+  "manifest_version": 2,
+
+  "name": "ru_exbus",
+
+  "version": "0.2",
+
+  "author": "Lawrence Park and Biggie Emmanuel",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
+
+}
 
