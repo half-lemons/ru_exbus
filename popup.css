@@ -1,7 +1,11 @@
+h1 {
+    font-size: 24px !important;
+}
+
 .jumbotron {
 	padding: 0.5em 0.6em;
 	h1 {
-		font-size: 1em;
+		font-size: 24px;
 	}
 	p {
 		font-size:1.2em;

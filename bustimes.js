@@ -24,14 +24,12 @@ function parse_bus_data(bus_data, fn)
             parsed_data[current_bus.title].push(current_bus.predictions[j].minutes);
         }
     }
-
     return parsed_data;
 }
 
 function get_bus_times(stop, fn)
 {
     var xhr = new XMLHttpRequest();
-
     xhr.open("GET", BASE_URL + stop, true);
 
     xhr.onreadystatechange = function()
@@ -42,6 +40,5 @@ function get_bus_times(stop, fn)
             return;
         }
     }
-
     xhr.send();
 }
