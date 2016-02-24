@@ -4,7 +4,7 @@ Initial Release:
 Second Phase:
 
 Populate lists:
-	
+
 		- closest bus stops
 		- available bus stops
 
@@ -15,3 +15,7 @@ Third Phase:
 
 Additional maybe features...
 	Pictures (x3) of all stops and change stop picture depending upon what the time is.
+
+
+Bugs:
+- border for table row is shortened if there are less than 3 of a single bus running

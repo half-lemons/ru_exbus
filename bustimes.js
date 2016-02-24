@@ -1,44 +1,42 @@
-// global vars
-var BASE_URL = "http://runextbus.heroku.com/stop/";
-
-function parse_bus_data(bus_data, fn)
+function parse_bus_data(bus_data)
 {
     var parsed_data = {};
 
-    /* iterate through buses */
+    /* parse bus data */
     for(i = 0; i < bus_data.length; i++)
     {
         var current_bus = bus_data[i];
-
-        //that bus isn't running
-        if(!current_bus.predictions)
+        if(!current_bus.predictions) // bus isn't running
         {
             continue;
         }
 
         // get times for current bus
         parsed_data[current_bus.title] = [];
-
         for(j = 0; j < current_bus.predictions.length; j++)
         {
             parsed_data[current_bus.title].push(current_bus.predictions[j].minutes);
         }
     }
+
     return parsed_data;
 }
 
 function get_bus_times(stop, fn)
 {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", BASE_URL + stop, true);
+    url = "http://runextbus.heroku.com/stop/" + stop;
 
-    xhr.onreadystatechange = function()
-    {
-        if (xhr.readyState == 4)
-        {
-            fn( parse_bus_data(jQuery.parseJSON(xhr.responseText)) );
+    $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(data, status){
+            if(status === 'error'){
+                // should handle this.....
+            }
+
+            fn( parse_bus_data(data) );
+
             return;
         }
-    }
-    xhr.send();
+    });
 }

@@ -1,38 +1,39 @@
-// Global variables.
+/************ NOTES *************
+Bus Colors:
+    busch - purple
+    c.ave - yellow
+    livi - blue
+    c/d - green
+Names of All Buses:
+    a b c ee f h wk1 wk2 all sum1 sum2
+**********************************/
+
+/******** Global Vars *******/
 var STOP_CHOICE = null;
 var NEAREST_STOPS;
 
-get_nearby_stops(start_extension);
-
-//busch - purple
-//c.ave - yellow
-//livi - blue
-//c/d - green
-
-// a b c ee f h wk1 wk2 all sum1 sum2
-
-// JSON feed
-
-var bus_time;
-var body = "";
-
-// Color codes the bus times.
-function color_code(bus_time) {
+/*
+ * Returns properly colored HTML Button based on the input bus time
+ */
+function create_bus_button(bus_time) {
+    var button_type = '';
     if (bus_time <= 5) {
-        return '<button type="button" class="btn btn-danger">';
+        button_type = 'danger';
     }
     if (bus_time > 5 && bus_time <= 10) {
-        return '<button type="button" class="btn btn-warning">';
+        button_type = 'warning';
     }
     if (bus_time > 10) {
-        return '<button type="button" class="btn btn-success">';
+        button_type = 'success';
     }
+
+    return '<button type="button" class="btn btn-' + button_type + '">' + bus_time + ' min</button>';
 }
 
-// Plugs the current stop into the HTML.
-    // Possible future use might be to have this also deal with all the stop pictures as well.
-
-function curr_stop(current) {
+/*
+ * Inject current stop into the HTML. (Future version may include a stop picture)
+ */
+function display_current_stop(current) {
     var title = "";
 
     title += '<p>'+current+'</p>';
@@ -57,46 +58,46 @@ function load_all_stops(all_list){
     }
 }
 
-// Populates the table and plugs into the HTML.
-function populate_bus_table(bus_data) {
-    body = "";
+/*
+ * Injects HTML with a table containing bus times
+ */
+function display_bus_table(bus_data) {
+    var html_body = "";
     var bus_names = Object.keys(bus_data);
 
+    // build html table from bus times
     for(i = 0; i < bus_names.length; i++){
         var name = bus_names[i];
-        body += '<tr>';
-
-        // Filtering out garbage values...
-        if (name == "null") {
+        if (!name) { // Filtering out garbage values...
             continue;
         }
 
-        var time = bus_data[name];
-        body += "<td>" + name + "</td>";
-        
-        for(var j = 0; j < 3; j++) {
-            body += "<td>" + color_code(time[j]) + time[j] + ' min' + '</button></td>';
+        var times = bus_data[name];
+
+        html_body += '<tr>';
+
+        // add bus name
+        html_body += "<td>" + name + "</td>";
+
+        // add bus times
+        for(var j = 0; j < 3 && j < times.length; j++) {
+            html_body += '<td>' + create_bus_button(times[j]) + '</td>';
         }
-        
-        body += '</tr>';
+
+        html_body += '</tr>';
     }
 
-    document.getElementById('info_html').innerHTML = body;
+    document.getElementById('info_html').innerHTML = html_body;
+
     return;
 }
 
 
 function refresh_info() {
-    // havent gotten stops yet
-    if (!NEAREST_STOPS) {
-        console.log("not yet");
-        return;
-    }
-
     var stop = (STOP_CHOICE) ? STOP_CHOICE : NEAREST_STOPS[0];
 
-    curr_stop(NEAREST_STOPS[0]);
-    get_bus_times(stop, populate_bus_table);
+    display_current_stop(stop);
+    get_bus_times(stop, display_bus_table);
 }
 
 // Extension main()/controller function essentially.
@@ -107,10 +108,13 @@ function start_extension(nearest_stops) {
         function() {
             // Init call to retrieve the first refresh.
             refresh_info();
-            
+
             //load_nearby_stops();
 
-            window.setInterval(
-                refresh_info, 30000);        
-        });
+            window.setInterval(refresh_info, 30000);
+        }
+    );
 }
+
+// get the nearby stops and then start the extension
+get_nearby_stops(start_extension);
